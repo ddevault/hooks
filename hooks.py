@@ -63,13 +63,16 @@ def hook_publish():
     hook = matches[0]
 
     allow = False
+    remote = request.remote_addr
+    if remote == "127.0.0.1" and "X-Real-IP" in request.headers:
+        remote = request.headers.get("X-Real-IP")
     for ip in hook.valid_ips.split(","):
         parts = ip.split("/")
         range = 32
         if len(parts) != 1:
             range = int(parts[1])
         addr = networkMask(parts[0], range)
-        if addressInNetwork(dottedQuadToNum(request.remote_addr), addr):
+        if addressInNetwork(dottedQuadToNum(remote), addr):
             allow = True
     if not allow:
         return "Hook rejected: unauthorized IP", 403
