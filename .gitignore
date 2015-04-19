@@ -1,0 +1,13 @@
+*.pyc
+bin/
+config.ini
+include/
+local/
+lib/
+*.swp
+*.rdb
+.idea/
+nbproject/
+MANIFEST
+dist/
+build/

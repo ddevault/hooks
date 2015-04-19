@@ -1,0 +1,12 @@
+[Unit]
+Description=Github hook service
+Wants=network.target
+Before=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/gunicorn hooks:app
+ExecStop=/usr/bin/pkill gunicorn
+
+[Install]
+WantedBy=multi-user.target
